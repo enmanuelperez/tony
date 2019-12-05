@@ -1,0 +1,144 @@
+// This program will read a number as a string in order to not get an overflow problem when it comes to very large numbers.
+// It will also determine if the number is divisible by 3 or by 5 or both.
+// Title: Flip Flop Capstone.
+// Programmer: Enmanuel Perez.
+// Last Modified: 11/29/19.
+
+#include <iostream>
+#include <string>
+#include <fstream>
+
+using namespace std;
+
+void printBanner(ostream& os = cout);
+void connectOutStream(string& fileName, ofstream&);
+void getValidLargeInt();
+bool isValidLargeInt(string num);
+void hasSign(string num);
+int sumOfDigits(string num);
+int lastDigitValue(string num);
+void printResults(string);
+
+int main()
+{
+	system("color 1B");
+	system("title Flip Flop Capstone  by Enmanuel Perez.");
+
+	string fileName, num;
+	ofstream outStream;
+	int n = num.length();
+
+	printBanner();
+
+	cout << "This program prints:                         \n"
+		<< "\t \"Flop\" if a number is divided by 3       \n"
+		<< "\t \"Flip\" if divisible by 5 and             \n"
+		<< "\t \"Flip Flop\" if divisible by BOTH 5 and 3 \n"
+		<< "\t nothing if divisible by NEITHER            \n\n";
+
+	cout << "What is the filename you want to store your output? ";
+	cin >> ws; getline(cin, fileName);
+
+	connectOutStream(fileName, outStream);
+
+	cout << "\n\n";
+
+	cout << "What is your number? ";
+	cin >> ws; getline(cin, num);
+
+	isValidLargeInt(num) ? cout << "\t Flip" : cout << "\t Flop";
+
+	cout << endl;
+
+	printResults(num);
+
+
+
+	system("pause");
+	return 0;
+}
+
+void printBanner(ostream& os)
+{
+	os << "\n"
+		<< "\t                         Flip Flop                          \n"
+		<< "\t for VERY Large Numbers that would overflow any type of int \n"
+		<< "\t     accepts signs at the begining of the num               \n"
+		<< "\t                     Sample Solution                        \n"
+		<< "\t                     Using Functions                        \n"
+		<< "\t                    by Enmanuel Perez                       \n\n";
+}
+
+void connectOutStream(string& fileName, ofstream&)
+{
+	ofstream outStream(fileName);
+
+	outStream.open(fileName);
+
+	outStream.close();
+}
+
+void getValidLargeInt()
+{
+	string num;
+
+	while (!(cin >> num))
+	{
+		cout << "Please provide a legal number. ";
+		cin.clear();
+		cin.ignore();
+	}
+}
+
+bool isValidLargeInt(string num)
+{
+	int sum = 0, n = num.length();
+
+	if (((num[n - 1] - '0') == 0) || ((num[n - 1] - '0') == 5))
+	{
+		return ((num[n - 1] - '0') == 0) || ((num[n - 1] - '0') == 5);
+	}
+	else
+	{
+		for (int i = 0; i < n; i++)
+			sum += (num[i] - '0');
+
+		return (sum % 3 == 0);
+	}
+}
+
+void hasSign(string num)
+{
+
+}
+
+int sumOfDigits(string num)
+{
+	int temp = 0, sum = 0, strLen = (int)num.length();
+
+	while (temp < strLen)
+	{
+		sum = (num[temp] - '0') + sum;
+
+		temp++;
+	}
+	return sum;
+}
+
+int lastDigitValue(string num)
+{
+	int n = num.length();
+
+	return n = num.at(num.length() - 1) - '0';
+}
+
+void printResults(string num)
+{
+	cout << "\t Debuggin couts are in printResults function: \n";
+
+	cout << "\t The int value of the last digit in \"num\" \n"
+		<< "\t\t (here call the corresponding function) is " << lastDigitValue(num) << endl;
+
+	cout << "\t The sum of digits in \"num\" \n"
+		<< "\t\t (here call the corresponding function) is " << sumOfDigits(num) << endl;
+}
